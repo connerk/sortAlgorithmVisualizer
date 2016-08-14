@@ -1,0 +1,18 @@
+{
+  "name": "sortalgorithmvisualizer",
+  "version": "0.0.1",
+  "description": "A sorting algorithm efficiency demonstration using P5.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Kevin Conner <kevin.r.conner@gmail.com>",
+  "license": "MIT",
+  "repository":{
+    "type": "git",
+    "url": "https://github.com/connerk/sortAlgorithmVisualizer.git"
+  }, 
+  "dependencies": {
+    "p5": "^3.10.3"
+  }
+}
