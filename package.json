@@ -8,11 +8,11 @@
   },
   "author": "Kevin Conner <kevin.r.conner@gmail.com>",
   "license": "MIT",
-  "repository":{
+  "repository": {
     "type": "git",
     "url": "https://github.com/connerk/sortAlgorithmVisualizer.git"
-  }, 
+  },
   "dependencies": {
-    "p5": "^3.10.3"
+    "p5": "^0.5.2"
   }
 }
