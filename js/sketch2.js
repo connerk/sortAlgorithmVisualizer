@@ -1,3 +1,5 @@
+'use strict';
+
 //canvas settings
 let canvasColor = [200,200,200],
     currentBarColor = [255,50,50],
@@ -28,7 +30,7 @@ function setup(){
         var h = (i+1)*(height/entityCount);
         var x = assignments[i];
         var y = canvas.height-h;
-        entities.push(new bar(i,x,y,entityWidth,h));
+        entities.push(new Bar(i,x,y,entityWidth,h));
         entities[i].display();
     }
 }

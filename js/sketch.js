@@ -1,13 +1,14 @@
+'use strict';
 //canvas settings
 let canvasColor = [200,200,200],
     currentBarColor = [255,50,50],
     newCompareColor = [50,50,255];
 
 let entityCount = 100,
-    entityWidth = 0,
     spacing = 2,
-    position = [],
-    entities = [];
+    slot = [],
+    swapSlot,
+    assignment = [];
 
 function setup(){
     // Create the canvas
@@ -17,63 +18,41 @@ function setup(){
     frameRate(120);
 
     //create positions
-    entityWidth = (width -((entityCount*spacing)-spacing))/entityCount;
-    for (let i =0;i<entityCount;i++){
-        position.push(i*(spacing+entityWidth));
+    var entityWidth = (width - ((entityCount * spacing)-spacing)) / entityCount;
+    for (let i = 0; i < entityCount; i++){
+        slot.push(new Slot(i,canvas.width / entityCount));
+        assignment.push(i);
     }
-    var assignments = shuffle(position);
+    assignment = shuffle(assignment);
+    swapSlot = new Slot(-1,0);
 
     //create bars
-    for (let i=0; i<entityCount; i++){
-        var h = (i+1)*(height/entityCount);
-        var x = assignments[i];
-        var y = canvas.height-h;
-        entities.push(new bar(i,x,y,entityWidth,h));
-        entities[i].display();
+    for (let i=0; i < entityCount ; i++){
+        var h = (i+1)*(height / entityCount);
+        var x = slot[assignment[i]].xPos;
+        var y = canvas.height - h;
+        slot[assignment[i]].contents = new Bar(i,x,y,entityWidth,h);
+        slot[assignment[i]].contents.display();
     }
 }
 
-var on = true;
 var step = 0;
-var colorHold,
-    tempEntity;
+var colorHold;
+var counter = 0;
 function draw(){
 
-    entities.forEach(i => (i.x == position[step]) ? tempEntity = i : "")
+    slot.forEach(function(i){
+        
+        var tempEntity = i.contents
 
-    if(on){
         colorHold = tempEntity.color;
         tempEntity.color = currentBarColor;
-        tempEntity.display();
-        on = !on;
-        
-    } else {
+        //tempEntity.display();
+        //{TODO} cause some sort of delay
         tempEntity.color = colorHold;
         tempEntity.display();
-        step++;
-        on = !on;
-    }
 
-    (step == entities.length) ? step = 0 : ""
-    
-}
-
-function bar(id,x=0,y=0,w=0,h=0){
-    this.type = "bar";
-    this.id = id;
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.h = h;
-
-    this.color = colorMap(this.h);
-
-    this.display = function(){
-        noStroke();
-        fill(this.color)
-        rect(this.x,this.y,this.w,this.h);
-    }
-
+    });
 }
 
 function shuffle(array) {
@@ -93,4 +72,8 @@ function shuffle(array) {
 
 function colorMap(e){
     return color(map(e,0,windowHeight,10,200),100,100);
+}
+
+function sleep (time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
 }
